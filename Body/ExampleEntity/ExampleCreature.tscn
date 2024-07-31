@@ -29,48 +29,48 @@ Position = Vector2(0, 50)
 
 [sub_resource type="Resource" id="Resource_wj1dq"]
 script = ExtResource("3_r38i0")
-P1 = 0
-P2 = 1
+P0 = 0
+P1 = 1
 LengthMultiplier = 1.0
 Strength = 100.0
 Damping = 0.1
 
 [sub_resource type="Resource" id="Resource_3fmr8"]
 script = ExtResource("3_r38i0")
-P1 = 1
-P2 = 2
+P0 = 1
+P1 = 2
 LengthMultiplier = 1.0
 Strength = 100.0
 Damping = 0.1
 
 [sub_resource type="Resource" id="Resource_6r1dw"]
 script = ExtResource("3_r38i0")
-P1 = 2
-P2 = 3
+P0 = 2
+P1 = 3
 LengthMultiplier = 1.0
 Strength = 100.0
 Damping = 0.1
 
 [sub_resource type="Resource" id="Resource_dl8me"]
 script = ExtResource("3_r38i0")
+P0 = 0
 P1 = 3
-P2 = 0
 LengthMultiplier = 1.0
 Strength = 100.0
 Damping = 0.1
 
 [sub_resource type="Resource" id="Resource_15osw"]
 script = ExtResource("3_r38i0")
-P1 = 0
-P2 = 2
+P0 = 0
+P1 = 2
 LengthMultiplier = 1.0
 Strength = 100.0
 Damping = 0.1
 
 [sub_resource type="Resource" id="Resource_uula7"]
 script = ExtResource("3_r38i0")
-P1 = 1
-P2 = 3
+P0 = 1
+P1 = 3
 LengthMultiplier = 1.0
 Strength = 100.0
 Damping = 0.1
