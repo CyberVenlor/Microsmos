@@ -70,14 +70,17 @@ public partial class Entity : Area2D { //使用area2d作为零时的AABB箱
 					DrawLine(
 						Points[spring.P1].Position,
 						Points[spring.P2].Position,
-						Colors.White
+						Colors.DarkBlue.Lerp (
+							Colors.OrangeRed, 
+							Mathf.Abs(Points[spring.P1].DistanceTo(Points[spring.P2])- spring.Length) / spring.Length * 2
+						)
 					);
 				}
 			}
 			//
 			if (drawPoint) {
 				foreach (Point point in Points) {
-					DrawCircle(point.Position, point.Mass, Colors.Red);
+					DrawCircle(point.Position, point.Mass, Colors.White);
 				}
 			}
 		};

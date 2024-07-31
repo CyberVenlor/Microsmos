@@ -25,15 +25,15 @@ script = ExtResource("3_sok4o")
 P1 = 0
 P2 = 1
 LengthMultiplier = 1.0
-Strength = 1.0
+Strength = 2.2
 Damping = 0.1
 
 [sub_resource type="Resource" id="Resource_t667y"]
 script = ExtResource("3_sok4o")
 P1 = 1
 P2 = 2
-LengthMultiplier = 1.5
-Strength = 1.0
+LengthMultiplier = 6.585
+Strength = 3.52
 Damping = 0.1
 
 [sub_resource type="Resource" id="Resource_leyjo"]
@@ -41,7 +41,7 @@ script = ExtResource("3_sok4o")
 P1 = 0
 P2 = 2
 LengthMultiplier = 1.0
-Strength = 1.0
+Strength = 1.94
 Damping = 0.1
 
 [sub_resource type="Resource" id="Resource_kd8qs"]
