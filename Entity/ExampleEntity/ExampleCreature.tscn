@@ -1,58 +1,87 @@
-[gd_scene load_steps=12 format=3 uid="uid://bhyhq42rm5vdb"]
+[gd_scene load_steps=16 format=3 uid="uid://bhyhq42rm5vdb"]
 
-[ext_resource type="Script" path="res://Entity/Entity.cs" id="1_tq2lc"]
-[ext_resource type="Script" path="res://Entity/ResPoint.cs" id="2_p487w"]
-[ext_resource type="Script" path="res://Entity/ResEntity.cs" id="3_d0r06"]
-[ext_resource type="Script" path="res://Entity/ResSpring.cs" id="3_sok4o"]
+[ext_resource type="Script" path="res://Entity/Basic/SoftBody/SoftBody.cs" id="1_k12oi"]
+[ext_resource type="Script" path="res://Entity/Basic/ResPoint.cs" id="2_68br8"]
+[ext_resource type="Script" path="res://Entity/Basic/SoftBody/ResSoftBody.cs" id="3_k8lqa"]
+[ext_resource type="Script" path="res://Entity/Basic/SoftBody/ResSpring.cs" id="3_r38i0"]
 
-[sub_resource type="Resource" id="Resource_kkyqe"]
-script = ExtResource("2_p487w")
-Mass = 2.0
+[sub_resource type="Resource" id="Resource_5gewa"]
+script = ExtResource("2_68br8")
+Mass = 1.0
 Position = Vector2(0, 0)
 
-[sub_resource type="Resource" id="Resource_0susy"]
-script = ExtResource("2_p487w")
-Mass = 2.0
+[sub_resource type="Resource" id="Resource_w6yf3"]
+script = ExtResource("2_68br8")
+Mass = 1.0
+Position = Vector2(50, 0)
+
+[sub_resource type="Resource" id="Resource_csdgj"]
+script = ExtResource("2_68br8")
+Mass = 1.0
+Position = Vector2(50, 50)
+
+[sub_resource type="Resource" id="Resource_xaw7u"]
+script = ExtResource("2_68br8")
+Mass = 1.0
 Position = Vector2(0, 50)
 
-[sub_resource type="Resource" id="Resource_kviu4"]
-script = ExtResource("2_p487w")
-Mass = 2.0
-Position = Vector2(-50, 50)
-
-[sub_resource type="Resource" id="Resource_x3if0"]
-script = ExtResource("3_sok4o")
+[sub_resource type="Resource" id="Resource_wj1dq"]
+script = ExtResource("3_r38i0")
 P1 = 0
 P2 = 1
 LengthMultiplier = 1.0
-Strength = 2.2
+Strength = 1.0
 Damping = 0.1
 
-[sub_resource type="Resource" id="Resource_t667y"]
-script = ExtResource("3_sok4o")
+[sub_resource type="Resource" id="Resource_3fmr8"]
+script = ExtResource("3_r38i0")
 P1 = 1
 P2 = 2
-LengthMultiplier = 6.585
-Strength = 3.52
+LengthMultiplier = 1.0
+Strength = 1.0
 Damping = 0.1
 
-[sub_resource type="Resource" id="Resource_leyjo"]
-script = ExtResource("3_sok4o")
+[sub_resource type="Resource" id="Resource_6r1dw"]
+script = ExtResource("3_r38i0")
+P1 = 2
+P2 = 3
+LengthMultiplier = 1.0
+Strength = 1.0
+Damping = 0.1
+
+[sub_resource type="Resource" id="Resource_dl8me"]
+script = ExtResource("3_r38i0")
+P1 = 3
+P2 = 0
+LengthMultiplier = 1.0
+Strength = 1.0
+Damping = 0.1
+
+[sub_resource type="Resource" id="Resource_15osw"]
+script = ExtResource("3_r38i0")
 P1 = 0
 P2 = 2
 LengthMultiplier = 1.0
-Strength = 1.94
+Strength = 1.0
 Damping = 0.1
 
-[sub_resource type="Resource" id="Resource_kd8qs"]
-script = ExtResource("3_d0r06")
-Points = Array[Object]([SubResource("Resource_kkyqe"), SubResource("Resource_0susy"), SubResource("Resource_kviu4")])
-Springs = Array[Object]([SubResource("Resource_x3if0"), SubResource("Resource_t667y"), SubResource("Resource_leyjo")])
+[sub_resource type="Resource" id="Resource_uula7"]
+script = ExtResource("3_r38i0")
+P1 = 1
+P2 = 3
+LengthMultiplier = 1.0
+Strength = 1.0
+Damping = 0.1
+
+[sub_resource type="Resource" id="Resource_utbfj"]
+script = ExtResource("3_k8lqa")
+Springs = Array[Object]([SubResource("Resource_wj1dq"), SubResource("Resource_3fmr8"), SubResource("Resource_6r1dw"), SubResource("Resource_dl8me"), SubResource("Resource_15osw"), SubResource("Resource_uula7")])
+Points = Array[Object]([SubResource("Resource_5gewa"), SubResource("Resource_w6yf3"), SubResource("Resource_csdgj"), SubResource("Resource_xaw7u")])
 
 [node name="ExampleCreature" type="Node2D"]
 
 [node name="SoftBody" type="Area2D" parent="."]
-script = ExtResource("1_tq2lc")
-resEntity = SubResource("Resource_kd8qs")
+script = ExtResource("1_k12oi")
+resBody = SubResource("Resource_utbfj")
 
 [node name="Camera2D" type="Camera2D" parent="."]
