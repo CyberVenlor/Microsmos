@@ -65,7 +65,11 @@ public partial class SoftBody : Body { //使用area2d作为零时的AABB箱
 		for (int i = 0; i < Points.Length; i++) {
 			ref Point point = ref Points[i];
 			point.Position += point.Velocity * delta;
-			/////point.Velocity += new Vector2(0, 5);//////
+			point.Velocity += new Vector2(0, 5);//////
+			if (point.Position.Y>170){
+				point.Velocity *= new Vector2(0, -0.5f);
+				point.Position.Y=170;
+			}
 		}
 	}
 
@@ -82,5 +86,9 @@ public partial class SoftBody : Body { //使用area2d作为零时的AABB箱
 			p1.Velocity += force * delta / p1.Mass;
 			p2.Velocity -= force * delta / p2.Mass;
 		}
+	}
+
+	private void SimulateCollide() {
+
 	}
 }

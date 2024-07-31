@@ -36,10 +36,10 @@ public abstract partial class Body : Node2D {
             Points = new Point[resBody.Points.Length];
             for (int i = 0; i < resBody.Points.Length; i++) {
                 Points[i].Mass = resBody.Points[i].Mass;
-                Points[i].Position = resBody.Points[i].Position + GlobalPosition;
+                Points[i].Position = GlobalTransform * resBody.Points[i].Position;
             }
         }
-        GlobalPosition = Vector2.Zero;
+        GlobalTransform = new Transform2D(0, Vector2.Zero);
 	}
 
     public void CalcAABB() { //TODO
@@ -49,7 +49,7 @@ public abstract partial class Body : Node2D {
         }
     }
 
-    public List<Body> GetOverlapBodies() { //TODO
+    public List<Body> GetOverlapAABB() { //TODO
         List<Body> bodies = [];
         foreach (Body body in Body.bodies) {
             if (body != this && body.AABB.Intersects(AABB))
@@ -77,7 +77,7 @@ public abstract partial class Body : Node2D {
                 AABB.Position,new Vector2(AABB.End.X, AABB.Position.Y),
                 AABB.End, new Vector2(AABB.Position.X, AABB.End.Y)
             ],
-            Colors.Black
+            GetOverlapAABB().Count > 0 ? Colors.DarkRed : Colors.Black
         );
     }
-    }
+}

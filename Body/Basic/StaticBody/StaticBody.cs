@@ -8,6 +8,7 @@ public partial class StaticBody : Body {
 			DrawPolygon();
 			DrawPoint();
 		};
+        CalcAABB();
     }
 
     public override void _PhysicsProcess(double delta) {

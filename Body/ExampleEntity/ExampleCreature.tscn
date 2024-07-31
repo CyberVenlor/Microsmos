@@ -31,8 +31,8 @@ Position = Vector2(0, 50)
 script = ExtResource("3_r38i0")
 P1 = 0
 P2 = 1
-LengthMultiplier = 1.45
-Strength = 1.0
+LengthMultiplier = 1.0
+Strength = 100.0
 Damping = 0.1
 
 [sub_resource type="Resource" id="Resource_3fmr8"]
@@ -40,7 +40,7 @@ script = ExtResource("3_r38i0")
 P1 = 1
 P2 = 2
 LengthMultiplier = 1.0
-Strength = 1.0
+Strength = 100.0
 Damping = 0.1
 
 [sub_resource type="Resource" id="Resource_6r1dw"]
@@ -48,7 +48,7 @@ script = ExtResource("3_r38i0")
 P1 = 2
 P2 = 3
 LengthMultiplier = 1.0
-Strength = 1.0
+Strength = 100.0
 Damping = 0.1
 
 [sub_resource type="Resource" id="Resource_dl8me"]
@@ -56,7 +56,7 @@ script = ExtResource("3_r38i0")
 P1 = 3
 P2 = 0
 LengthMultiplier = 1.0
-Strength = 1.0
+Strength = 100.0
 Damping = 0.1
 
 [sub_resource type="Resource" id="Resource_15osw"]
@@ -64,7 +64,7 @@ script = ExtResource("3_r38i0")
 P1 = 0
 P2 = 2
 LengthMultiplier = 1.0
-Strength = 1.0
+Strength = 100.0
 Damping = 0.1
 
 [sub_resource type="Resource" id="Resource_uula7"]
@@ -72,7 +72,7 @@ script = ExtResource("3_r38i0")
 P1 = 1
 P2 = 3
 LengthMultiplier = 1.0
-Strength = 1.0
+Strength = 100.0
 Damping = 0.1
 
 [sub_resource type="Resource" id="Resource_utbfj"]
@@ -83,22 +83,22 @@ Points = Array[Object]([SubResource("Resource_5gewa"), SubResource("Resource_w6y
 [sub_resource type="Resource" id="Resource_q7ftc"]
 script = ExtResource("2_68br8")
 Mass = 1.0
-Position = Vector2(-100, 30)
+Position = Vector2(-500, 30)
 
 [sub_resource type="Resource" id="Resource_1g4wd"]
 script = ExtResource("2_68br8")
 Mass = 1.0
-Position = Vector2(100, 30)
+Position = Vector2(500, 30)
 
 [sub_resource type="Resource" id="Resource_7hbs6"]
 script = ExtResource("2_68br8")
 Mass = 1.0
-Position = Vector2(100, -30)
+Position = Vector2(500, -30)
 
 [sub_resource type="Resource" id="Resource_i4afd"]
 script = ExtResource("2_68br8")
 Mass = 1.0
-Position = Vector2(-100, -30)
+Position = Vector2(-500, -30)
 
 [sub_resource type="Resource" id="Resource_d3t31"]
 script = ExtResource("6_57iq0")
@@ -107,6 +107,25 @@ Points = Array[Object]([SubResource("Resource_q7ftc"), SubResource("Resource_1g4
 [node name="ExampleCreature" type="Node"]
 
 [node name="SoftBody" type="Node2D" parent="."]
+rotation = 0.368117
+script = ExtResource("1_k12oi")
+resBody = SubResource("Resource_utbfj")
+
+[node name="SoftBody2" type="Node2D" parent="."]
+position = Vector2(-77, -38)
+rotation = -0.276709
+script = ExtResource("1_k12oi")
+resBody = SubResource("Resource_utbfj")
+
+[node name="SoftBody3" type="Node2D" parent="."]
+position = Vector2(105, -91)
+rotation = 0.337605
+script = ExtResource("1_k12oi")
+resBody = SubResource("Resource_utbfj")
+
+[node name="SoftBody4" type="Node2D" parent="."]
+position = Vector2(-11, -155)
+rotation = -0.379599
 script = ExtResource("1_k12oi")
 resBody = SubResource("Resource_utbfj")
 
