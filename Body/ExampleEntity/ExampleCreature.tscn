@@ -1,9 +1,9 @@
 [gd_scene load_steps=16 format=3 uid="uid://bhyhq42rm5vdb"]
 
-[ext_resource type="Script" path="res://Entity/Basic/SoftBody/SoftBody.cs" id="1_k12oi"]
-[ext_resource type="Script" path="res://Entity/Basic/ResPoint.cs" id="2_68br8"]
-[ext_resource type="Script" path="res://Entity/Basic/SoftBody/ResSoftBody.cs" id="3_k8lqa"]
-[ext_resource type="Script" path="res://Entity/Basic/SoftBody/ResSpring.cs" id="3_r38i0"]
+[ext_resource type="Script" path="res://Body/Basic/SoftBody/SoftBody.cs" id="1_k12oi"]
+[ext_resource type="Script" path="res://Body/Basic/ResPoint.cs" id="2_68br8"]
+[ext_resource type="Script" path="res://Body/Basic/SoftBody/ResSoftBody.cs" id="3_k8lqa"]
+[ext_resource type="Script" path="res://Body/Basic/SoftBody/ResSpring.cs" id="3_r38i0"]
 
 [sub_resource type="Resource" id="Resource_5gewa"]
 script = ExtResource("2_68br8")

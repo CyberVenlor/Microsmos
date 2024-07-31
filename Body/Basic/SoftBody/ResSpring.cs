@@ -1,6 +1,6 @@
 using Godot;
 
-//基础弹簧
+//读取弹簧
 [GlobalClass]
 public partial class ResSpring : Resource {
     [Export] public int P1;
