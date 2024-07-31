@@ -1,9 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://bhyhq42rm5vdb"]
+[gd_scene load_steps=23 format=3 uid="uid://bhyhq42rm5vdb"]
 
 [ext_resource type="Script" path="res://Body/Basic/SoftBody/SoftBody.cs" id="1_k12oi"]
 [ext_resource type="Script" path="res://Body/Basic/ResPoint.cs" id="2_68br8"]
 [ext_resource type="Script" path="res://Body/Basic/SoftBody/ResSoftBody.cs" id="3_k8lqa"]
 [ext_resource type="Script" path="res://Body/Basic/SoftBody/ResSpring.cs" id="3_r38i0"]
+[ext_resource type="Script" path="res://Body/Basic/StaticBody/StaticBody.cs" id="5_5rj7c"]
+[ext_resource type="Script" path="res://Body/Basic/ResBody.cs" id="6_57iq0"]
 
 [sub_resource type="Resource" id="Resource_5gewa"]
 script = ExtResource("2_68br8")
@@ -29,7 +31,7 @@ Position = Vector2(0, 50)
 script = ExtResource("3_r38i0")
 P1 = 0
 P2 = 1
-LengthMultiplier = 1.0
+LengthMultiplier = 1.45
 Strength = 1.0
 Damping = 0.1
 
@@ -78,10 +80,39 @@ script = ExtResource("3_k8lqa")
 Springs = Array[Object]([SubResource("Resource_wj1dq"), SubResource("Resource_3fmr8"), SubResource("Resource_6r1dw"), SubResource("Resource_dl8me"), SubResource("Resource_15osw"), SubResource("Resource_uula7")])
 Points = Array[Object]([SubResource("Resource_5gewa"), SubResource("Resource_w6yf3"), SubResource("Resource_csdgj"), SubResource("Resource_xaw7u")])
 
-[node name="ExampleCreature" type="Node2D"]
+[sub_resource type="Resource" id="Resource_q7ftc"]
+script = ExtResource("2_68br8")
+Mass = 1.0
+Position = Vector2(-100, 30)
 
-[node name="SoftBody" type="Area2D" parent="."]
+[sub_resource type="Resource" id="Resource_1g4wd"]
+script = ExtResource("2_68br8")
+Mass = 1.0
+Position = Vector2(100, 30)
+
+[sub_resource type="Resource" id="Resource_7hbs6"]
+script = ExtResource("2_68br8")
+Mass = 1.0
+Position = Vector2(100, -30)
+
+[sub_resource type="Resource" id="Resource_i4afd"]
+script = ExtResource("2_68br8")
+Mass = 1.0
+Position = Vector2(-100, -30)
+
+[sub_resource type="Resource" id="Resource_d3t31"]
+script = ExtResource("6_57iq0")
+Points = Array[Object]([SubResource("Resource_q7ftc"), SubResource("Resource_1g4wd"), SubResource("Resource_7hbs6"), SubResource("Resource_i4afd")])
+
+[node name="ExampleCreature" type="Node"]
+
+[node name="SoftBody" type="Node2D" parent="."]
 script = ExtResource("1_k12oi")
 resBody = SubResource("Resource_utbfj")
+
+[node name="StaticBody" type="Node2D" parent="."]
+position = Vector2(0, 200)
+script = ExtResource("5_5rj7c")
+resBody = SubResource("Resource_d3t31")
 
 [node name="Camera2D" type="Camera2D" parent="."]

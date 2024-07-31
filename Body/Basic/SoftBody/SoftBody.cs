@@ -1,7 +1,4 @@
 using Godot;
-using System;
-using System.IO;
-using System.Reflection.Metadata;
 
 public partial class SoftBody : Body { //使用area2d作为零时的AABB箱
 	//基础弹簧
@@ -19,6 +16,7 @@ public partial class SoftBody : Body { //使用area2d作为零时的AABB箱
     public override void _Ready() {
         base._Ready();
 		Draw += () => {
+			DrawAABB();
 			DrawPolygon();
 			DrawSpring();
 			DrawPoint();
@@ -30,6 +28,7 @@ public partial class SoftBody : Body { //使用area2d作为零时的AABB箱
 		base._PhysicsProcess(delta);
         SimulateSpring((float)delta);
 		SimulatePoint((float)delta);
+		CalcAABB();
 		QueueRedraw();
     }
 
@@ -64,7 +63,9 @@ public partial class SoftBody : Body { //使用area2d作为零时的AABB箱
 
 	private void SimulatePoint(float delta) {
 		for (int i = 0; i < Points.Length; i++) {
-			Points[i].Position += Points[i].Velocity * delta;
+			ref Point point = ref Points[i];
+			point.Position += point.Velocity * delta;
+			/////point.Velocity += new Vector2(0, 5);//////
 		}
 	}
 
