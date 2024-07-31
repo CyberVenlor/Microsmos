@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Reflection.Metadata;
 
 public partial class Entity : Area2D { //使用area2d作为零时的AABB箱
 	//每个Entity都具有一个包含点初始化数据的资源文件
@@ -12,7 +13,7 @@ public partial class Entity : Area2D { //使用area2d作为零时的AABB箱
     }
 	//基础弹簧
 	public struct Spring {
-		public int P1;//point在EntityPara.Points中的索引
+		public int P1;//point在Entity.Points中的索引
 		public int P2;
 		public float Strength;
 		public float Damping;
@@ -25,7 +26,7 @@ public partial class Entity : Area2D { //使用area2d作为零时的AABB箱
     public override void _Ready() {
 		//初始化点等数据
         if (resEntity != null) InitFromResEntity(resEntity);
-		Console.WriteLine(Points);
+		DrawEntity();
     }
 
 	public void InitFromResEntity(ResEntity resEntity) {
@@ -43,5 +44,27 @@ public partial class Entity : Area2D { //使用area2d作为零时的AABB箱
 			Springs[i].Strength = resEntity.Springs[i].Strength;
 			Springs[i].Damping = resEntity.Springs[i].Damping;
 		}
+	}
+
+	public void DrawEntity(bool drawPoint = true, bool drawSpring = true) {
+		Draw += () => {
+			//
+			if (drawSpring) {
+				foreach (Spring spring in Springs) {
+					DrawLine(
+						Points[spring.P1].Position,
+						Points[spring.P2].Position,
+						Colors.White
+					);
+					GD.Print(1);
+				}
+			}
+			//
+			if (drawPoint) {
+				foreach (Point point in Points) {
+					DrawCircle(point.Position, point.Mass, Colors.Red);
+				}
+			}
+		};
 	}
 }

@@ -1,21 +1,48 @@
-[gd_scene load_steps=6 format=3 uid="uid://bhyhq42rm5vdb"]
+[gd_scene load_steps=11 format=3 uid="uid://bhyhq42rm5vdb"]
 
 [ext_resource type="Script" path="res://Entity/Entity.cs" id="1_tq2lc"]
 [ext_resource type="Script" path="res://Entity/ResPoint.cs" id="2_p487w"]
 [ext_resource type="Script" path="res://Entity/ResEntity.cs" id="3_d0r06"]
+[ext_resource type="Script" path="res://Entity/ResSpring.cs" id="3_sok4o"]
 
 [sub_resource type="Resource" id="Resource_kkyqe"]
 script = ExtResource("2_p487w")
-Mass = 10.0
-Position = Vector2(5, 0)
+Mass = 2.0
+Position = Vector2(0, 0)
+
+[sub_resource type="Resource" id="Resource_0susy"]
+script = ExtResource("2_p487w")
+Mass = 2.0
+Position = Vector2(0, 50)
+
+[sub_resource type="Resource" id="Resource_kviu4"]
+script = ExtResource("2_p487w")
+Mass = 2.0
+Position = Vector2(-50, 50)
+
+[sub_resource type="Resource" id="Resource_x3if0"]
+script = ExtResource("3_sok4o")
+P1 = 0
+P2 = 1
+Strength = 0.0
+Damping = 0.0
+
+[sub_resource type="Resource" id="Resource_t667y"]
+script = ExtResource("3_sok4o")
+P1 = 1
+P2 = 2
+Strength = 0.0
+Damping = 0.0
 
 [sub_resource type="Resource" id="Resource_kd8qs"]
 script = ExtResource("3_d0r06")
-Points = Array[Object]([SubResource("Resource_kkyqe")])
-Springs = null
+Points = Array[Object]([SubResource("Resource_kkyqe"), SubResource("Resource_0susy"), SubResource("Resource_kviu4")])
+Springs = Array[Object]([SubResource("Resource_x3if0"), SubResource("Resource_t667y")])
 
 [node name="ExampleCreature" type="Node2D"]
 
 [node name="SoftBody" type="Area2D" parent="."]
 script = ExtResource("1_tq2lc")
 resEntity = SubResource("Resource_kd8qs")
+
+[node name="Camera2D" type="Camera2D" parent="."]
