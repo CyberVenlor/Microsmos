@@ -1,10 +1,23 @@
-[gd_scene load_steps=18 format=3 uid="uid://bhyhq42rm5vdb"]
+[gd_scene load_steps=25 format=3 uid="uid://bhyhq42rm5vdb"]
 
 [ext_resource type="Script" path="res://Body/Basic/SoftBody/SoftBody.cs" id="1_k12oi"]
 [ext_resource type="Script" path="res://Body/Basic/ResEdge.cs" id="2_1hsyg"]
 [ext_resource type="Script" path="res://Body/Basic/ResPoint.cs" id="2_68br8"]
 [ext_resource type="Script" path="res://Body/Basic/SoftBody/ResSoftBody.cs" id="3_k8lqa"]
 [ext_resource type="Script" path="res://Body/Basic/SoftBody/ResSpring.cs" id="3_r38i0"]
+[ext_resource type="Script" path="res://Body/Basic/StaticBody/StaticBody.cs" id="6_ecryl"]
+[ext_resource type="Script" path="res://Body/Basic/ResBody.cs" id="7_2538w"]
+
+[sub_resource type="Resource" id="Resource_qpbxp"]
+script = ExtResource("2_68br8")
+Mass = 1.0
+Position = Vector2(0, 0)
+
+[sub_resource type="Resource" id="Resource_epi5l"]
+script = ExtResource("3_k8lqa")
+resSprings = null
+resPoints = Array[Object]([SubResource("Resource_qpbxp")])
+resEdges = null
 
 [sub_resource type="Resource" id="Resource_1m378"]
 script = ExtResource("2_1hsyg")
@@ -86,29 +99,44 @@ resSprings = Array[Object]([SubResource("Resource_dxkif"), SubResource("Resource
 resPoints = Array[Object]([SubResource("Resource_ved26"), SubResource("Resource_wp62r"), SubResource("Resource_fahrq"), SubResource("Resource_btvi5")])
 resEdges = Array[Resource]([SubResource("Resource_1m378")])
 
+[sub_resource type="Resource" id="Resource_r2ccu"]
+script = ExtResource("2_68br8")
+Mass = 1.0
+Position = Vector2(0, 0)
+
+[sub_resource type="Resource" id="Resource_0ss75"]
+script = ExtResource("2_68br8")
+Mass = 1.0
+Position = Vector2(500, 0)
+
+[sub_resource type="Resource" id="Resource_riel8"]
+script = ExtResource("7_2538w")
+resPoints = Array[Object]([SubResource("Resource_r2ccu"), SubResource("Resource_0ss75")])
+resEdges = null
+
 [node name="ExampleCreature" type="Node"]
 
 [node name="SoftBody" type="Node2D" parent="."]
-rotation = 0.368117
+position = Vector2(-2.00003, -43)
+rotation = -0.00577378
 script = ExtResource("1_k12oi")
-resBody = SubResource("Resource_utbfj")
+resBody = SubResource("Resource_epi5l")
 
 [node name="SoftBody2" type="Node2D" parent="."]
-position = Vector2(-77, -137)
-rotation = -0.276709
+position = Vector2(-20, 48)
+rotation = 0.000328541
 script = ExtResource("1_k12oi")
 resBody = SubResource("Resource_utbfj")
 
 [node name="SoftBody3" type="Node2D" parent="."]
-position = Vector2(80, -115)
-rotation = 0.337605
+position = Vector2(-3, -6)
+rotation = 0.000328541
 script = ExtResource("1_k12oi")
 resBody = SubResource("Resource_utbfj")
 
-[node name="SoftBody4" type="Node2D" parent="."]
-position = Vector2(-12, -78)
-rotation = -0.379599
-script = ExtResource("1_k12oi")
-resBody = SubResource("Resource_utbfj")
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(-111, -55)
+script = ExtResource("6_ecryl")
+resBody = SubResource("Resource_riel8")
 
 [node name="Camera2D" type="Camera2D" parent="."]

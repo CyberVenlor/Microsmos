@@ -57,6 +57,7 @@ public abstract partial class Body : Node2D {
         foreach (Point point in Points) {
             AABB = AABB.Expand(point.Position);
         }
+        //AABB = AABB.Grow(1);
     }
 
     public List<Body> GetOverlapAABB() { //TODO
