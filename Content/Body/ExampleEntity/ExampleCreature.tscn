@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://bhyhq42rm5vdb"]
-
-[node name="ExampleCreature" type="Node"]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-
-[node name="HelloWorld" type="HelloWorld" parent="."]
