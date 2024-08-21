@@ -1,4 +1,6 @@
 #include "PhysicsBody.h"
+#include "PhysicsObject.hpp"
+#include "Pool.hpp"
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/godot.hpp>
 #include <godot_cpp/variant/variant.hpp>
@@ -6,12 +8,22 @@
 
 using namespace godot;
 
-PhysicsBody::PhysicsBody(){
+PhysicsBody::PhysicsBody(){}
 
+PhysicsBody::~PhysicsBody(){}
+
+void PhysicsBody::_enter_tree(){
+    //将物理对象放入物理对象池
+    physics_object_index = PhysicsObject::physics_objects += PhysicsObject();
 }
 
-PhysicsBody::~PhysicsBody(){
+void PhysicsBody::_exit_tree(){
+    //将物理对象移除
+    PhysicsObject::physics_objects -= physics_object_index;
+}
 
+void PhysicsBody::_physics_process(double delta){
+    PhysicsObject::Process((float)delta);
 }
 
 void PhysicsBody::_bind_methods(){

@@ -5,7 +5,6 @@
 #include <godot_cpp/godot.hpp>
 
 #include "PhysicsBody.h"
-#include "SoftBody.h"
 #include "BodyData.hpp"
 
 
@@ -14,23 +13,12 @@ using namespace godot;
 
 void initialize_gdextension_types(ModuleInitializationLevel p_level)
 {
-	switch (p_level)
-	{
-	case MODULE_INITIALIZATION_LEVEL_SCENE:
-		ClassDB::register_class<BodyData>();
-		ClassDB::register_abstract_class<PhysicsBody>();
-		ClassDB::register_class<SoftBody>();
-		
-		break;
-	case MODULE_INITIALIZATION_LEVEL_EDITOR:
-		break;
-	default:
-		break;
+	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
+		return;
 	}
-
-    //register part
-	
-	
+	ClassDB::register_class<IPoint>();
+	ClassDB::register_class<BodyData>();
+	ClassDB::register_class<PhysicsBody>();
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {
