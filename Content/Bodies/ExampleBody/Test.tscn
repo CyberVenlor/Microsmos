@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://do2yawbov7puq"]
+
+[sub_resource type="BodyData" id="BodyData_8xkkj"]
+FilePath = "res://test.body"
+
+[node name="PhysicsBody" type="PhysicsBody"]
+BodyData = SubResource("BodyData_8xkkj")
+
+[node name="Node2D" type="Node2D" parent="."]

@@ -1,0 +1,292 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8incd6r0gs6"]
+
+[ext_resource type="Script" path="res://Content/Editor/Editor.cs" id="1_n4q4c"]
+[ext_resource type="Script" path="res://Content/Editor/MenuButton.cs" id="2_n7s5c"]
+[ext_resource type="Script" path="res://Content/Editor/LineEditFloat.cs" id="3_njba2"]
+
+[node name="Editor" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 32.0
+offset_bottom = 32.0
+script = ExtResource("1_n4q4c")
+
+[node name="MainPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 826.0
+offset_top = 24.0
+offset_right = 1116.0
+offset_bottom = 624.0
+
+[node name="Menu" type="HBoxContainer" parent="MainPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Point" type="Button" parent="MainPanel/Menu" node_paths=PackedStringArray("Menu")]
+layout_mode = 2
+text = "Point"
+script = ExtResource("2_n7s5c")
+Menu = NodePath("../../Content/Point")
+
+[node name="Edge" type="Button" parent="MainPanel/Menu" node_paths=PackedStringArray("Menu")]
+layout_mode = 2
+text = "Edge
+"
+script = ExtResource("2_n7s5c")
+Menu = NodePath("../../Content/Edge")
+
+[node name="Spring" type="Button" parent="MainPanel/Menu" node_paths=PackedStringArray("Menu")]
+layout_mode = 2
+text = "Spring"
+script = ExtResource("2_n7s5c")
+Menu = NodePath("../../Content/Spring")
+
+[node name="Content" type="Control" parent="MainPanel"]
+anchors_preset = 0
+offset_left = 17.0
+offset_top = 56.0
+offset_right = 57.0
+offset_bottom = 96.0
+
+[node name="Point" type="VBoxContainer" parent="MainPanel/Content"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Index" type="Label" parent="MainPanel/Content/Point"]
+layout_mode = 2
+text = "Index"
+
+[node name="Label" type="Label" parent="MainPanel/Content/Point/Index"]
+layout_mode = 0
+offset_left = 101.0
+offset_top = -1.0
+offset_right = 141.0
+offset_bottom = 22.0
+text = "0
+"
+
+[node name="Position" type="Label" parent="MainPanel/Content/Point"]
+custom_minimum_size = Vector2(0, 68.08)
+layout_mode = 2
+text = "Position "
+
+[node name="X" type="Label" parent="MainPanel/Content/Point/Position"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 0.0650024
+offset_right = 115.0
+offset_bottom = 23.065
+text = "X:"
+
+[node name="LineEdit" type="LineEdit" parent="MainPanel/Content/Point/Position/X"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = -3.0
+offset_right = 92.0625
+offset_bottom = 28.0
+script = ExtResource("3_njba2")
+
+[node name="Y" type="Label" parent="MainPanel/Content/Point/Position"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 36.065
+offset_right = 115.0
+offset_bottom = 59.065
+text = "Y:"
+
+[node name="LineEdit" type="LineEdit" parent="MainPanel/Content/Point/Position/Y"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = -2.0
+offset_right = 92.0625
+offset_bottom = 29.0
+script = ExtResource("3_njba2")
+
+[node name="Mass" type="Label" parent="MainPanel/Content/Point"]
+layout_mode = 2
+text = "Mass"
+
+[node name="LineEdit" type="LineEdit" parent="MainPanel/Content/Point/Mass"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = -2.0
+offset_right = 167.063
+offset_bottom = 29.0
+script = ExtResource("3_njba2")
+
+[node name="Edge" type="VBoxContainer" parent="MainPanel/Content"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Index" type="Label" parent="MainPanel/Content/Edge"]
+layout_mode = 2
+text = "Index"
+
+[node name="Label" type="Label" parent="MainPanel/Content/Edge/Index"]
+layout_mode = 0
+offset_left = 101.0
+offset_top = -1.0
+offset_right = 141.0
+offset_bottom = 22.0
+text = "0
+"
+
+[node name="P0" type="Label" parent="MainPanel/Content/Edge"]
+layout_mode = 2
+text = "P0
+"
+
+[node name="Label" type="Label" parent="MainPanel/Content/Edge/P0"]
+layout_mode = 0
+offset_left = 101.0
+offset_top = -1.0
+offset_right = 141.0
+offset_bottom = 22.0
+text = "0
+"
+
+[node name="P1" type="Label" parent="MainPanel/Content/Edge"]
+layout_mode = 2
+text = "P1"
+
+[node name="Label" type="Label" parent="MainPanel/Content/Edge/P1"]
+layout_mode = 0
+offset_left = 101.0
+offset_top = -1.0
+offset_right = 141.0
+offset_bottom = 22.0
+text = "0
+"
+
+[node name="Reflection" type="Label" parent="MainPanel/Content/Edge"]
+custom_minimum_size = Vector2(0, 31.24)
+layout_mode = 2
+text = "Reflection
+"
+
+[node name="LineEdit" type="LineEdit" parent="MainPanel/Content/Edge/Reflection"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = -3.0
+offset_right = 164.063
+offset_bottom = 28.0
+script = ExtResource("3_njba2")
+
+[node name="Spring" type="VBoxContainer" parent="MainPanel/Content"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Index" type="Label" parent="MainPanel/Content/Spring"]
+layout_mode = 2
+text = "Index"
+
+[node name="Label" type="Label" parent="MainPanel/Content/Spring/Index"]
+layout_mode = 0
+offset_left = 101.0
+offset_top = -1.0
+offset_right = 141.0
+offset_bottom = 22.0
+text = "0
+"
+
+[node name="P0" type="Label" parent="MainPanel/Content/Spring"]
+layout_mode = 2
+text = "P0
+"
+
+[node name="Label" type="Label" parent="MainPanel/Content/Spring/P0"]
+layout_mode = 0
+offset_left = 101.0
+offset_top = -1.0
+offset_right = 141.0
+offset_bottom = 22.0
+text = "0
+"
+
+[node name="P1" type="Label" parent="MainPanel/Content/Spring"]
+layout_mode = 2
+text = "P1"
+
+[node name="Label" type="Label" parent="MainPanel/Content/Spring/P1"]
+layout_mode = 0
+offset_left = 101.0
+offset_top = -1.0
+offset_right = 141.0
+offset_bottom = 22.0
+text = "0
+"
+
+[node name="Strength" type="Label" parent="MainPanel/Content/Spring"]
+custom_minimum_size = Vector2(0, 31.24)
+layout_mode = 2
+text = "Strength
+"
+
+[node name="LineEdit" type="LineEdit" parent="MainPanel/Content/Spring/Strength"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = -3.0
+offset_right = 164.063
+offset_bottom = 28.0
+script = ExtResource("3_njba2")
+
+[node name="Damping" type="Label" parent="MainPanel/Content/Spring"]
+layout_mode = 2
+text = "Damping
+"
+
+[node name="LineEdit" type="LineEdit" parent="MainPanel/Content/Spring/Damping"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = -2.0
+offset_right = 164.063
+offset_bottom = 29.0
+script = ExtResource("3_njba2")
+
+[node name="MenuBar" type="MenuBar" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="File" type="PopupMenu" parent="MenuBar"]
+item_count = 3
+item_0/text = "New"
+item_0/id = 0
+item_1/text = "Load"
+item_1/id = 1
+item_2/text = "Save"
+item_2/id = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(388, 321)
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+initial_position = 1
+size = Vector2i(375, 159)
+popup_window = true
+ok_button_text = "打开"
+file_mode = 0
+filters = PackedStringArray("*.body")
+show_hidden_files = true
+use_native_dialog = true
+
+[node name="Scaler" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 619.0
+offset_top = 611.0
+offset_right = 819.0
+offset_bottom = 627.0
+min_value = 0.6
+max_value = 4.0
+step = 0.2
+value = 1.0
+tick_count = 10
+ticks_on_borders = true

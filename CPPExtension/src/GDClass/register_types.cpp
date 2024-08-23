@@ -4,7 +4,7 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/godot.hpp>
 
-#include "Singleton.hpp"
+#include "GodotAsseccer.h"
 #include "PhysicsBody.h"
 #include "BodyData.hpp"
 
@@ -17,8 +17,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level)
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
-	//ClassDB::register_class<Singleton>();
-	ClassDB::register_class<IPoint>();
+	ClassDB::register_class<GodotAsseccer>();
 	ClassDB::register_class<BodyData>();
 	ClassDB::register_class<PhysicsBody>();
 }

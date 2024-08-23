@@ -1,0 +1,17 @@
+///this file is binary
+int32: Point
+	float: Position.X
+	float: Position.Y
+	flaot: Mass
+	...
+int32: Edge
+	int32: P0
+	int32: p1
+	float: Reflection
+	...
+int32: Spring
+	int32: P0
+	int32: p1
+	float: Strength
+	float: Damping
+	...

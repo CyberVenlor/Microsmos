@@ -16,7 +16,6 @@ namespace godot {
 
             void _enter_tree() override;
             void _exit_tree() override;
-            void _physics_process(double delta) override;
             
         protected:
             static void _bind_methods();

@@ -1,0 +1,1 @@
+D:\GodotEngine\Editors\Godot_v4.2.2-stable_mono_win64\Godot_v4.2.2-stable_mono_win64.exe --project D:\GodotEngine\Projects\Microsmos\project.godot --generate-mono-glue .

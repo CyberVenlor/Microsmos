@@ -1,5 +1,5 @@
 #include "PhysicsBody.h"
-#include "PhysicsObject.hpp"
+#include "PhysicsObject.h"
 #include "Pool.hpp"
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/godot.hpp>
@@ -20,10 +20,6 @@ void PhysicsBody::_enter_tree(){
 void PhysicsBody::_exit_tree(){
     //将物理对象移除
     PhysicsObject::physics_objects -= physics_object_index;
-}
-
-void PhysicsBody::_physics_process(double delta){
-    PhysicsObject::Process((float)delta);
 }
 
 void PhysicsBody::_bind_methods(){
