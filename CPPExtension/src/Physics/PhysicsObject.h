@@ -12,8 +12,7 @@ using namespace godot;
 
 class PhysicsObject {
     public:
-        PhysicsObject(const Ref<BodyData>& body_data);
-        PhysicsObject(const Pool<Point>& points, const Pool<Edge>& edges, const Pool<Spring>& springs) : points(points), edges(edges), springs(springs) {}
+        PhysicsObject(const Ref<BodyData>& body_data, const Vector2& position);
         static Pool<PhysicsObject> physics_objects;
         static void process(float delta);
         static void draw();
@@ -30,6 +29,7 @@ class PhysicsObject {
 
     protected:
         void draw_point();
+        void draw_edge();
         void point_solver(float delta);
         void spring_solver();
 };

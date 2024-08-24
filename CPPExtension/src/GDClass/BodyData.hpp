@@ -51,7 +51,7 @@ namespace godot {
             Pool<Edge> edges;
             Pool<Spring> springs;
 
-            void read_binary(){
+            void read_binary(){//他奶奶的不是按照参数顺序读取
                 if (file_path.get_extension() != "body") return;
                 Ref<FileAccess> file = FileAccess::open(file_path, FileAccess::ModeFlags::READ);
                 // //Point
@@ -63,12 +63,17 @@ namespace godot {
                 // //Edge
                 u32 edge_count = file->get_32();
                 for (u32 i = 0; i < edge_count; i++){
-                    edges += Edge(file->get_32(), file->get_32(), file->get_float());
+                    u32 p0 = file->get_32();
+                    u32 p1 = file->get_32();
+                    edges += Edge(p0, p1, file->get_float());
                 }
                 // //Spring
                 u32 spring_count = file->get_32();
                 for (u32 i = 0; i < spring_count; i++){
-                    springs += Spring(file->get_32(), file->get_32(), file->get_float(), file->get_float());
+                    u32 p0 = file->get_32();
+                    u32 p1 = file->get_32();
+                    f32 strength = file->get_float();
+                    springs += Spring(p0, p1, strength, file->get_float());
                 }
             }
     };

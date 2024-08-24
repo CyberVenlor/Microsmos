@@ -14,7 +14,7 @@ PhysicsBody::~PhysicsBody(){}
 
 void PhysicsBody::_enter_tree(){
     //将物理对象放入物理对象池
-    physics_object_index = PhysicsObject::physics_objects += PhysicsObject(body_data);
+    physics_object_index = PhysicsObject::physics_objects += PhysicsObject(body_data, Vector2(0,0));
 }
 
 void PhysicsBody::_exit_tree(){
