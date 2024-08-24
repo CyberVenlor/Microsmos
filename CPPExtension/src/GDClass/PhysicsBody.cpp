@@ -14,7 +14,7 @@ PhysicsBody::~PhysicsBody(){}
 
 void PhysicsBody::_enter_tree(){
     //将物理对象放入物理对象池
-    physics_object_index = PhysicsObject::physics_objects += PhysicsObject();
+    physics_object_index = PhysicsObject::physics_objects += PhysicsObject(body_data);
 }
 
 void PhysicsBody::_exit_tree(){
@@ -23,8 +23,8 @@ void PhysicsBody::_exit_tree(){
 }
 
 void PhysicsBody::_bind_methods(){
-    ClassDB::bind_method(D_METHOD("get_bodyData"), &PhysicsBody::getBodyData);
-    ClassDB::bind_method(D_METHOD("set_bodyData", "bodyData"),&PhysicsBody::setBodyData);
+    ClassDB::bind_method(D_METHOD("get_body_data"), &PhysicsBody::get_body_data);
+    ClassDB::bind_method(D_METHOD("set_body_data", "body_data"),&PhysicsBody::set_body_data);
     ClassDB::add_property(
         "PhysicsBody", 
         PropertyInfo(
@@ -33,16 +33,16 @@ void PhysicsBody::_bind_methods(){
             PROPERTY_HINT_RESOURCE_TYPE,
             "BodyData"
         ),
-        "set_bodyData",
-        "get_bodyData"
+        "set_body_data",
+        "get_body_data"
     );
 }
 
 
-Ref<BodyData> PhysicsBody::getBodyData() const { 
-    return bodyData;
+Ref<BodyData> PhysicsBody::get_body_data() const { 
+    return body_data;
 }
 
-void PhysicsBody::setBodyData(const Ref<BodyData> bodyData){
-    this->bodyData = bodyData;
+void PhysicsBody::set_body_data(const Ref<BodyData> bodyData){
+    this->body_data = bodyData;
 }

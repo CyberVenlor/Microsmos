@@ -1,8 +1,33 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8incd6r0gs6"]
+[gd_scene load_steps=14 format=3 uid="uid://b8incd6r0gs6"]
 
 [ext_resource type="Script" path="res://Content/Editor/Editor.cs" id="1_n4q4c"]
 [ext_resource type="Script" path="res://Content/Editor/MenuButton.cs" id="2_n7s5c"]
-[ext_resource type="Script" path="res://Content/Editor/LineEditFloat.cs" id="3_njba2"]
+[ext_resource type="Script" path="res://Content/Editor/Interections/PointX.cs" id="3_3g7ib"]
+[ext_resource type="Script" path="res://Content/Editor/Interections/PointDelete.cs" id="4_bvayo"]
+[ext_resource type="Script" path="res://Content/Editor/Interections/EdgeAssign.cs" id="5_klv1f"]
+[ext_resource type="Script" path="res://Content/Editor/Interections/EdgeDelete.cs" id="6_sgdfr"]
+[ext_resource type="Script" path="res://Content/Editor/Interections/SpringAssign.cs" id="7_tlonx"]
+[ext_resource type="Script" path="res://Content/Editor/Interections/SpringDelete.cs" id="8_j6lmw"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_kfhcd"]
+device = -1
+keycode = 68
+unicode = 100
+
+[sub_resource type="InputEventKey" id="InputEventKey_33ii4"]
+device = -1
+keycode = 4194312
+
+[sub_resource type="Shortcut" id="Shortcut_5ngg0"]
+events = [SubResource("InputEventKey_kfhcd"), SubResource("InputEventKey_33ii4")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_jrwub"]
+device = -1
+keycode = 65
+unicode = 97
+
+[sub_resource type="Shortcut" id="Shortcut_dw54d"]
+events = [SubResource("InputEventKey_jrwub")]
 
 [node name="Editor" type="Control"]
 layout_mode = 3
@@ -16,7 +41,7 @@ layout_mode = 0
 offset_left = 826.0
 offset_top = 24.0
 offset_right = 1116.0
-offset_bottom = 624.0
+offset_bottom = 229.0
 
 [node name="Menu" type="HBoxContainer" parent="MainPanel"]
 layout_mode = 0
@@ -50,23 +75,9 @@ offset_right = 57.0
 offset_bottom = 96.0
 
 [node name="Point" type="VBoxContainer" parent="MainPanel/Content"]
-visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="Index" type="Label" parent="MainPanel/Content/Point"]
-layout_mode = 2
-text = "Index"
-
-[node name="Label" type="Label" parent="MainPanel/Content/Point/Index"]
-layout_mode = 0
-offset_left = 101.0
-offset_top = -1.0
-offset_right = 141.0
-offset_bottom = 22.0
-text = "0
-"
 
 [node name="Position" type="Label" parent="MainPanel/Content/Point"]
 custom_minimum_size = Vector2(0, 68.08)
@@ -87,23 +98,22 @@ offset_left = 25.0
 offset_top = -3.0
 offset_right = 92.0625
 offset_bottom = 28.0
-script = ExtResource("3_njba2")
+script = ExtResource("3_3g7ib")
 
 [node name="Y" type="Label" parent="MainPanel/Content/Point/Position"]
 layout_mode = 0
 offset_left = 75.0
-offset_top = 36.065
+offset_top = 28.065
 offset_right = 115.0
-offset_bottom = 59.065
+offset_bottom = 51.065
 text = "Y:"
 
 [node name="LineEdit" type="LineEdit" parent="MainPanel/Content/Point/Position/Y"]
 layout_mode = 0
 offset_left = 25.0
-offset_top = -2.0
+offset_top = -1.0
 offset_right = 92.0625
-offset_bottom = 29.0
-script = ExtResource("3_njba2")
+offset_bottom = 30.0
 
 [node name="Mass" type="Label" parent="MainPanel/Content/Point"]
 layout_mode = 2
@@ -112,56 +122,22 @@ text = "Mass"
 [node name="LineEdit" type="LineEdit" parent="MainPanel/Content/Point/Mass"]
 layout_mode = 0
 offset_left = 100.0
-offset_top = -2.0
+offset_top = -8.0
 offset_right = 167.063
-offset_bottom = 29.0
-script = ExtResource("3_njba2")
+offset_bottom = 23.0
+
+[node name="Delete" type="Button" parent="MainPanel/Content/Point"]
+custom_minimum_size = Vector2(255, 0)
+layout_mode = 2
+shortcut = SubResource("Shortcut_5ngg0")
+text = "Delete"
+script = ExtResource("4_bvayo")
 
 [node name="Edge" type="VBoxContainer" parent="MainPanel/Content"]
 visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="Index" type="Label" parent="MainPanel/Content/Edge"]
-layout_mode = 2
-text = "Index"
-
-[node name="Label" type="Label" parent="MainPanel/Content/Edge/Index"]
-layout_mode = 0
-offset_left = 101.0
-offset_top = -1.0
-offset_right = 141.0
-offset_bottom = 22.0
-text = "0
-"
-
-[node name="P0" type="Label" parent="MainPanel/Content/Edge"]
-layout_mode = 2
-text = "P0
-"
-
-[node name="Label" type="Label" parent="MainPanel/Content/Edge/P0"]
-layout_mode = 0
-offset_left = 101.0
-offset_top = -1.0
-offset_right = 141.0
-offset_bottom = 22.0
-text = "0
-"
-
-[node name="P1" type="Label" parent="MainPanel/Content/Edge"]
-layout_mode = 2
-text = "P1"
-
-[node name="Label" type="Label" parent="MainPanel/Content/Edge/P1"]
-layout_mode = 0
-offset_left = 101.0
-offset_top = -1.0
-offset_right = 141.0
-offset_bottom = 22.0
-text = "0
-"
 
 [node name="Reflection" type="Label" parent="MainPanel/Content/Edge"]
 custom_minimum_size = Vector2(0, 31.24)
@@ -175,53 +151,25 @@ offset_left = 97.0
 offset_top = -3.0
 offset_right = 164.063
 offset_bottom = 28.0
-script = ExtResource("3_njba2")
+
+[node name="Assign" type="Button" parent="MainPanel/Content/Edge"]
+custom_minimum_size = Vector2(255, 0)
+layout_mode = 2
+shortcut = SubResource("Shortcut_dw54d")
+text = "Assign(A)"
+script = ExtResource("5_klv1f")
+
+[node name="Delete" type="Button" parent="MainPanel/Content/Edge"]
+layout_mode = 2
+shortcut = SubResource("Shortcut_5ngg0")
+text = "Delete(D)"
+script = ExtResource("6_sgdfr")
 
 [node name="Spring" type="VBoxContainer" parent="MainPanel/Content"]
 visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="Index" type="Label" parent="MainPanel/Content/Spring"]
-layout_mode = 2
-text = "Index"
-
-[node name="Label" type="Label" parent="MainPanel/Content/Spring/Index"]
-layout_mode = 0
-offset_left = 101.0
-offset_top = -1.0
-offset_right = 141.0
-offset_bottom = 22.0
-text = "0
-"
-
-[node name="P0" type="Label" parent="MainPanel/Content/Spring"]
-layout_mode = 2
-text = "P0
-"
-
-[node name="Label" type="Label" parent="MainPanel/Content/Spring/P0"]
-layout_mode = 0
-offset_left = 101.0
-offset_top = -1.0
-offset_right = 141.0
-offset_bottom = 22.0
-text = "0
-"
-
-[node name="P1" type="Label" parent="MainPanel/Content/Spring"]
-layout_mode = 2
-text = "P1"
-
-[node name="Label" type="Label" parent="MainPanel/Content/Spring/P1"]
-layout_mode = 0
-offset_left = 101.0
-offset_top = -1.0
-offset_right = 141.0
-offset_bottom = 22.0
-text = "0
-"
 
 [node name="Strength" type="Label" parent="MainPanel/Content/Spring"]
 custom_minimum_size = Vector2(0, 31.24)
@@ -235,7 +183,6 @@ offset_left = 97.0
 offset_top = -3.0
 offset_right = 164.063
 offset_bottom = 28.0
-script = ExtResource("3_njba2")
 
 [node name="Damping" type="Label" parent="MainPanel/Content/Spring"]
 layout_mode = 2
@@ -248,7 +195,19 @@ offset_left = 97.0
 offset_top = -2.0
 offset_right = 164.063
 offset_bottom = 29.0
-script = ExtResource("3_njba2")
+
+[node name="Assign" type="Button" parent="MainPanel/Content/Spring"]
+custom_minimum_size = Vector2(255, 0)
+layout_mode = 2
+shortcut = SubResource("Shortcut_dw54d")
+text = "Assign(A)"
+script = ExtResource("7_tlonx")
+
+[node name="Delete" type="Button" parent="MainPanel/Content/Spring"]
+layout_mode = 2
+shortcut = SubResource("Shortcut_5ngg0")
+text = "Delete(D)"
+script = ExtResource("8_j6lmw")
 
 [node name="MenuBar" type="MenuBar" parent="."]
 layout_mode = 0
@@ -265,6 +224,7 @@ item_2/text = "Save"
 item_2/id = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
 position = Vector2(388, 321)
 
 [node name="FileDialog" type="FileDialog" parent="."]

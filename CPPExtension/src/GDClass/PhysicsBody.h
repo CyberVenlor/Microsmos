@@ -11,8 +11,8 @@ namespace godot {
             PhysicsBody();
             ~PhysicsBody();
             //attribute bodydata
-            Ref<BodyData> getBodyData() const;
-            void setBodyData (const Ref<BodyData> bodyData);
+            Ref<BodyData> get_body_data() const;
+            void set_body_data (const Ref<BodyData> body_Data);
 
             void _enter_tree() override;
             void _exit_tree() override;
@@ -21,7 +21,7 @@ namespace godot {
             static void _bind_methods();
             
         private:
-            Ref<BodyData> bodyData;
+            Ref<BodyData> body_data;
             int physics_object_index;
     };
 }

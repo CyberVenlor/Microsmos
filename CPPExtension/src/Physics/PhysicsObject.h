@@ -12,23 +12,26 @@ using namespace godot;
 
 class PhysicsObject {
     public:
+        PhysicsObject(const Ref<BodyData>& body_data);
+        PhysicsObject(const Pool<Point>& points, const Pool<Edge>& edges, const Pool<Spring>& springs) : points(points), edges(edges), springs(springs) {}
         static Pool<PhysicsObject> physics_objects;
-        static void Process(float delta);
+        static void process(float delta);
+        static void draw();
     private:
         Pool<Point> points;
-        Pool<Spring> springs;
         Pool<Edge> edges;
+        Pool<Spring> springs;
 
-        static inline void forEach(const std::function<void(PhysicsObject&)>& func) {
-            for (int i = 0; i < physics_objects.size(); i++) {
-                func(physics_objects[i]);
+        static inline void for_each(const std::function<void(PhysicsObject&)>& func) {
+            for (auto& physics_object : physics_objects) {
+                func(physics_object);
             }
         }
 
     protected:
-        void drawPoint();
-        void pointSolver(float delta);
-        void springSolver();
+        void draw_point();
+        void point_solver(float delta);
+        void spring_solver();
 };
 
 #endif

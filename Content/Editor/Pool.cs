@@ -7,7 +7,10 @@ public class Pool<T> : IEnumerable<T> {
     List<int> freeList = new ();
 
     public T this[int index]{
-        get => pool[index].obj;
+        get {
+            if (pool[index].isActive == false) GD.PrintErr("try to access inactive item");
+            return pool[index].obj;
+        }
         set {
             if (pool[index].isActive == true) pool[index] = (value, true);
         }
@@ -29,6 +32,10 @@ public class Pool<T> : IEnumerable<T> {
     public void Remove(int index){
         pool[index] = pool[index] with {isActive = false};
         freeList.Add(index);
+    }
+
+    public bool IsActive(int index){
+        return pool[index].isActive;
     }
 
     public IEnumerator<T> GetEnumerator()
@@ -60,10 +67,16 @@ public class Pool<T> : IEnumerable<T> {
 
         object IEnumerator.Current => Current;
 
-        public bool MoveNext()
-        {
-            _index++;
-            return _index < _customList.Count;
+        public bool MoveNext(){//自动跳过inactive项
+            while (_index < _customList.Count){
+                _index++;
+                if (_index < _customList.Count){
+                    if (_customList.IsActive(_index)){
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public void Reset()

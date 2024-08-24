@@ -5,7 +5,7 @@
 namespace godot {
     GodotAsseccer* GodotAsseccer::singleton = nullptr;
 
-    GodotAsseccer::GodotAsseccer() {
+    GodotAsseccer::GodotAsseccer(){
         if (singleton == nullptr) {
             singleton = this;
         } else {
@@ -13,9 +13,21 @@ namespace godot {
         }
     }
 
-    void GodotAsseccer::_physics_process(double delta) {
-        PhysicsObject::Process((float)delta);
+    void GodotAsseccer::_physics_process(double delta){
+        PhysicsObject::process((float)delta);
     }
 
-    void GodotAsseccer::_bind_methods() {}
+    void GodotAsseccer::_process(double delta){
+        queue_redraw();
+    }
+
+    void GodotAsseccer::_draw(){
+        PhysicsObject::draw();
+    }
+
+    void GodotAsseccer::_bind_methods(){}
+
+    GodotAsseccer* GodotAsseccer::get_singleton(){
+        return singleton;
+    }
 }

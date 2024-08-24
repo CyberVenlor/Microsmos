@@ -62,7 +62,8 @@
         "xmemory": "cpp",
         "xtr1common": "cpp",
         "xtree": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "*.cs": "cpp"
     },
     "cmake.configureOnOpen": true
 }

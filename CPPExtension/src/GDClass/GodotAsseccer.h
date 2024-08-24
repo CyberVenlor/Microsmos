@@ -10,19 +10,16 @@ namespace godot {
         public:
             GodotAsseccer();
 
-            inline static GodotAsseccer* getSingleton();
+            static GodotAsseccer* get_singleton();
 
             void _physics_process(double delta) override;
+            void _process(double delta) override;
+            void _draw() override;
         protected:
             static void _bind_methods();
         private:
             static GodotAsseccer* singleton;
     };
-
-    // Inline definition of getSingleton()
-    inline GodotAsseccer* GodotAsseccer::getSingleton() {
-        return singleton;
-    }
 }
 
 #endif

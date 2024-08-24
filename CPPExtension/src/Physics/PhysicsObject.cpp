@@ -3,22 +3,31 @@
 
 Pool<PhysicsObject> PhysicsObject::physics_objects;
 
-void PhysicsObject::Process(float delta) {
-    forEach([](PhysicsObject& obj) { obj.drawPoint(); });
-    forEach([delta](PhysicsObject& obj) { obj.pointSolver(delta); });
-    forEach([](PhysicsObject& obj) { obj.springSolver(); });
+PhysicsObject::PhysicsObject(const Ref<BodyData>& body_data){
+    points = body_data->get_points();
+    edges = body_data->get_edges();
+    springs = body_data->get_springs();
 }
 
-void PhysicsObject::drawPoint() {
+void PhysicsObject::process(float delta) {
+    for_each([delta](PhysicsObject& obj) { obj.point_solver(delta); });
+    for_each([](PhysicsObject& obj) { obj.spring_solver(); });
+}
+
+void PhysicsObject::draw(){
+    for_each([](PhysicsObject& obj) { obj.draw_point(); });
+}
+
+void PhysicsObject::draw_point() {
     for (int i = 0; i < points.size(); i++) {
-        GodotAsseccer::getSingleton()->draw_circle(points[i].position, points[i].mass, Color(1,0,0,1));
+        GodotAsseccer::get_singleton()->draw_circle(points[i].position, 2, Color(0,0,0,1));
     }
 }
 
-void PhysicsObject::pointSolver(float delta) {
-    UtilityFunctions::print("solve point");
+void PhysicsObject::point_solver(float delta) {
+    //UtilityFunctions::print("solve point");
 }
 
-void PhysicsObject::springSolver() {
-    UtilityFunctions::print("solve spring");
+void PhysicsObject::spring_solver() {
+    //UtilityFunctions::print("solve spring");
 }
