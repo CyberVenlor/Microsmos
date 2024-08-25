@@ -21,17 +21,16 @@ class PhysicsObject {
         Pool<Edge> edges;
         Pool<Spring> springs;
 
-        static inline void for_each(const std::function<void(PhysicsObject&)>& func) {
-            for (auto& physics_object : physics_objects) {
-                func(physics_object);
-            }
-        }
+        static void for_each_thread(const std::function<void(PhysicsObject&)>& func);
+        static void for_each(const std::function<void(PhysicsObject&)>& func);
 
     protected:
         void draw_point();
         void draw_edge();
-        void point_solver(float delta);
-        void spring_solver();
+        void draw_spring();
+        void solve_point(float delta);
+        void solve_spring(float delta);
+        f32 continuous_collision_detection(Vector2 Pp, Vector2 Vp, Vector2 Pu, Vector2 Vu, Vector2 Pv, Vector2 Vv, f32 delta);
 };
 
 #endif

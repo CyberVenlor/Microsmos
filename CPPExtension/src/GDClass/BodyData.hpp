@@ -57,8 +57,9 @@ namespace godot {
                 // //Point
                 u32 point_count = file->get_32();
                 for (u32 i = 0; i < point_count; i++){
-                    Vector2 position = Vector2(file->get_float(), file->get_float());
-                    points += Point(position, file->get_float());
+                    f32 x = file->get_float();
+                    f32 y = file->get_float();
+                    points += Point(Vector2(x, y), file->get_float());
                 }
                 // //Edge
                 u32 edge_count = file->get_32();
@@ -73,7 +74,7 @@ namespace godot {
                     u32 p0 = file->get_32();
                     u32 p1 = file->get_32();
                     f32 strength = file->get_float();
-                    springs += Spring(p0, p1, strength, file->get_float());
+                    springs += Spring(p0, p1, 50, file->get_float());
                 }
             }
     };
