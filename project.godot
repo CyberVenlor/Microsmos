@@ -13,6 +13,7 @@ config_version=5
 config/name="Microsmos"
 run/main_scene="res://Body/ExampleEntity/ExampleCreature.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
+run/max_fps=300
 
 [autoload]
 
@@ -21,6 +22,7 @@ GodotAsseccerSingleton="*res://Content/Global/GodotAsseccer.gd"
 [display]
 
 window/stretch/mode="canvas_items"
+window/vsync/vsync_mode=0
 
 [dotnet]
 

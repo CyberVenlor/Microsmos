@@ -28,9 +28,11 @@ class PhysicsObject {
         void draw_point();
         void draw_edge();
         void draw_spring();
-        void solve_point(float delta);
-        void solve_spring(float delta);
-        f32 continuous_collision_detection(Vector2 Pp, Vector2 Vp, Vector2 Pu, Vector2 Vu, Vector2 Pv, Vector2 Vv, f32 delta);
+        void solve_force(f32 delta);
+        void solve_point(f32 delta);
+        void solve_spring(f32 delta);
+        void solve_edge(f32 delta);
+        f32 continuous_collision_detection(const Point& point, const Point& p0, const Point& p1, f32 delta);
 };
 
 #endif

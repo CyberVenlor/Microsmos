@@ -3,6 +3,8 @@
 
 #include <cstdint>  // For fixed width integer types
 
+#define f32Inf std::numeric_limits<f32>::infinity()
+
 // Signed integer types with shorter names
 typedef std::int8_t  i8;    // 8-bit signed integer
 typedef std::int16_t i16;   // 16-bit signed integer

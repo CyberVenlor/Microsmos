@@ -20,8 +20,11 @@ PhysicsObject::PhysicsObject(const Ref<BodyData>& body_data, const Vector2& posi
 }
 
 void PhysicsObject::process(float delta) {
-    for_each([delta](PhysicsObject& obj) { obj.solve_spring(delta); });
-    for_each([delta](PhysicsObject& obj) { obj.solve_point(delta); });
+    //UtilityFunctions::print(continuous_collision_detection());
+    //for_each_thread([delta](PhysicsObject& obj) { obj.solve_spring(delta); });
+    for_each_thread([delta](PhysicsObject& obj) { obj.solve_spring(delta); });
+    for_each_thread([delta](PhysicsObject& obj) { obj.solve_edge(delta); });
+    for_each_thread([delta](PhysicsObject& obj) { obj.solve_point(delta); });
 }
 
 void PhysicsObject::draw(){
@@ -66,7 +69,7 @@ void PhysicsObject::for_each(const std::function<void(PhysicsObject&)>& func){
 
 void PhysicsObject::draw_point(){
     for (auto& point : points) {
-        GodotAsseccer::get_singleton()->draw_circle(point.position, 2, point.is_collided ? Color(1,1,1,1) : Color(0,0,0,1));
+        GodotAsseccer::get_singleton()->draw_circle(point.position, 2, Color(0,0,0,1));
     }
 }
 
@@ -82,39 +85,11 @@ void PhysicsObject::draw_spring(){
     }
 }
 
-void PhysicsObject::solve_point(float delta){
-    UtilityFunctions::print("solve");
-    for (u32 p = 0; p < points.size(); p++){
-        Point& point = points[p];
-        //UtilityFunctions::print("point");
-        for (auto& physics_object : physics_objects){
-            for (auto& edge : physics_object.edges){
-                f32 t = continuous_collision_detection(
-                    point.position, point.velocity,
-                    physics_object.points[edge.p0].position, physics_object.points[edge.p0].velocity,
-                    physics_object.points[edge.p1].position, physics_object.points[edge.p1].velocity,
-                    delta
-                );
-                //UtilityFunctions::print("edge");
-                if (t != std::numeric_limits<f32>::infinity()){
-                    UtilityFunctions::print(t);
-                    //point.position += point.velocity * t;
-                    point.velocity *= -1;
-                    //physics_object.points[edge.p0].position += physics_object.points[edge.p0].velocity * t;
-                    // physics_object.points[edge.p0].velocity *= -0.5;
-                    // //physics_object.points[edge.p1].position += physics_object.points[edge.p1].velocity * t;
-                    // physics_object.points[edge.p1].velocity *= -0.5;
-                }
-            }
-        }
-        
-        
-    }
-
+void PhysicsObject::solve_force(f32 delta){
     for (auto& point : points){
         point.position += point.velocity * delta;
 
-        point.velocity += Vector2(0.001, 0.1);
+        point.velocity += Vector2(0.001, 0.3);
 
         if (point.position.y > 200){
             point.velocity.y *= -1;
@@ -123,7 +98,20 @@ void PhysicsObject::solve_point(float delta){
     }
 }
 
-void PhysicsObject::solve_spring(float delta){
+void PhysicsObject::solve_point(f32 delta){
+    for (auto& point : points){
+        point.position += point.velocity * delta;
+
+        point.velocity += Vector2(0.001, 0.3);
+
+        if (point.position.y > 200){
+            point.velocity.y *= -1;
+            point.position.y = 200;
+        }
+    }
+}
+
+void PhysicsObject::solve_spring(f32 delta){
     for (auto& spring : springs){
         Point& p0 = points[spring.p0];
         Point& p1 = points[spring.p1];
@@ -138,53 +126,115 @@ void PhysicsObject::solve_spring(float delta){
     }
 }
 
-f32 PhysicsObject::continuous_collision_detection(Vector2 Pp, Vector2 Vp, Vector2 Pu, Vector2 Vu, Vector2 Pv, Vector2 Vv, f32 delta) {
+void PhysicsObject::solve_edge(f32 delta){
+    for (auto& edge :edges){
+        for (auto& physics_object : physics_objects){
+            for (auto& p : physics_object.points){
+                Point& p0 = points[edge.p0];
+                Point& p1 = points[edge.p1];
+
+                f32 t = continuous_collision_detection(p, p0, p1, delta);
+
+                if (t != f32Inf){
+                    // p0.position += p0.velocity * t;
+                    // p1.position += p1.velocity * t;
+                    // p.position += p.velocity * t;
+
+                    // 计算线段的方向向量和法向量
+                    Vector2 line_direction = (p1.position - p0.position).normalized();
+                    Vector2 normal = Vector2(-line_direction.y, line_direction.x); // 线段正面的法线
+
+                    // 判断法线方向是否正确，基于质点位置相对于线段的位置
+                    if ((p.position - p0.position).dot(normal) < 0) {
+                        normal = -normal; // 如果质点在线段背面，反转法线方向
+                        
+                    }
+                    normal = -normal;
+
+                    const f32 e = 2;
+
+                    float v_n = p.velocity.dot(normal);
+                    float v0_n = p0.velocity.dot(normal);
+                    float v1_n = p1.velocity.dot(normal);
+
+                    // 计算线段中点的速度
+                    float m0 = p0.mass;
+                    float m1 = p1.mass;
+                    float m_line = m0 + m1;
+
+                    float v_line = (m0 * v0_n + m1 * v1_n) / m_line;
+
+                    // 计算弹性碰撞后的目标中点速度
+                    float v_line_prime = v_line + e * (v_line - v_n);
+
+                    // 计算速度变化量
+                    float delta_v_n = m_line * (v_line_prime - v_line) / (p.mass + m_line);
+
+                    
+
+                    // 更新质点 p 的速度
+                    p.velocity += delta_v_n * normal;
+
+                    // 更新质点 p0 和 p1 的速度
+                    float delta_v0_n = (p0.mass * delta_v_n) / m_line;
+                    p0.velocity += -delta_v0_n * normal;
+
+                    float delta_v1_n = (p1.mass * delta_v_n) / m_line;
+                    p1.velocity += -delta_v1_n * normal;
+
+                    UtilityFunctions::print(delta_v_n * normal);
+                    UtilityFunctions::print(-delta_v0_n * normal);
+                    UtilityFunctions::print(-delta_v1_n * normal);
+                }
+            }
+        }
+    }
+}
+
+f32 PhysicsObject::continuous_collision_detection(const Point& p, const Point& p0, const Point& p1, f32 delta) {
     // 计算系数 A, B, C
-    f32 A = (Vp.x - Vu.x) * (Vp.y - Vv.y)
-          - (Vp.y - Vu.y) * (Vp.x - Vv.x);
+    const f32 A = (p.velocity.x - p0.velocity.x) * (p.velocity.y - p1.velocity.y)
+                - (p.velocity.y - p0.velocity.y) * (p.velocity.x - p1.velocity.x);
 
-    f32 B = (Pp.x - Pu.x) * (Vp.y - Vv.y)
-          + (Vp.x - Vu.x) * (Pp.y - Pv.y)
-          - (Pp.y - Pu.y) * (Vp.x - Vv.x)
-          - (Vp.y - Vu.y) * (Pp.x - Pv.x);
+    const f32 B = (p.position.x - p0.position.x) * (p.velocity.y - p1.velocity.y)
+                + (p.velocity.x - p0.velocity.x) * (p.position.y - p1.position.y)
+                - (p.position.y - p0.position.y) * (p.velocity.x - p1.velocity.x)
+                - (p.velocity.y - p0.velocity.y) * (p.position.x - p1.position.x);
 
-    f32 C = (Pp.x - Pu.x) * (Pp.y - Pv.y)
-          - (Pp.y - Pu.y) * (Pp.x - Pv.x);
+    const f32 C = (p.position.x - p0.position.x) * (p.position.y - p1.position.y)
+                - (p.position.y - p0.position.y) * (p.position.x - p1.position.x);
 
-    auto is_on_line = [](f32 Px, f32 Ux, f32 Vx){
-        //UtilityFunctions::print(Ux, ",", Px, ",", Vx);
+    auto const is_on_line = [](f32 Px, f32 Ux, f32 Vx) {
         return (Px > Ux && Px < Vx) || (Px > Vx && Px < Ux);
     };
 
-     // 计算判别式
-    if (std::abs(A) == 0) {
-        if (B != 0) {
+    // 判断 A 是否接近 0 (共线或平行)
+    if ( A == 0) {
+        if ( B != 0) {
             f32 t = -C / B;
-            if (t > 0 && t < delta && is_on_line(Pp.x + Vp.x * t, Pu.x + Vu.x * t, Pv.x + Vv.x * t)) {
+            if (t > 0 && t <= delta && is_on_line(p.position.x + p.velocity.x * t, p0.position.x + p0.velocity.x * t, p1.position.x + p1.velocity.x * t)) {
                 return t;
             }
         }
-        return std::numeric_limits<f32>::infinity(); // 无解
+        return f32Inf; // 无解
     }
-    
-    f32 discriminant = B * B - 4 * A * C;
+
+    const f32 discriminant = B * B - 4 * A * C;
     if (discriminant < 0) {
-        return std::numeric_limits<f32>::infinity(); // 无碰撞
+        return f32Inf; // 无碰撞
     }
 
-    
+    const f32 sqrt_discriminant = sqrt(discriminant);
+    const f32 t1 = (-B - sqrt_discriminant) / (2 * A);
+    const f32 t2 = (-B + sqrt_discriminant) / (2 * A);
 
-    //first solution
-    f32 t = (A > 0) ? (-B - sqrt(discriminant)) / (A * 2) : (-B + sqrt(discriminant)) / (A * 2);
-    if (t > 0 && t < delta && is_on_line(Pp.x + Vp.x * t, Pu.x + Vu.x * t, Pv.x + Vv.x * t)){
-        return t;
-    }
+    // 找到有效解并返回最小的
+    const bool t1_valid = (t1 > 0 && t1 <= delta && is_on_line(p.position.x + p.velocity.x * t1, p0.position.x + p0.velocity.x * t1, p1.position.x + p1.velocity.x * t1));
+    const bool t2_valid = (t2 > 0 && t2 <= delta && is_on_line(p.position.x + p.velocity.x * t2, p0.position.x + p0.velocity.x * t2, p1.position.x + p1.velocity.x * t2));
 
-    //second solution
-    t = (A > 0) ? (-B + sqrt(discriminant)) / (A * 2) : (-B - sqrt(discriminant)) / (A * 2);
-    if (t > 0 && t < delta && is_on_line(Pp.x + Vp.x * t, Pu.x + Vu.x * t, Pv.x + Vv.x * t)){
-        return t;
-    }
+    if (t1_valid && t2_valid) return std::min(t1, t2);
+    if (t1_valid) return t1;
+    if (t2_valid) return t2;
 
-    return std::numeric_limits<f32>::infinity();
+    return f32Inf; // 没有碰撞
 }
