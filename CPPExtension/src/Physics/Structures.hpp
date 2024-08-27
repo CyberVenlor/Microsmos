@@ -9,6 +9,7 @@ using namespace godot;
 struct Point {
     Vector2 position;
     Vector2 velocity;
+    Vector2 force;
     f32 mass; 
 
     Point(const Vector2& position, f32 mass) : position(position), mass(mass){}

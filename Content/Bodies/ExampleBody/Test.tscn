@@ -1,7 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://do2yawbov7puq"]
 
 [sub_resource type="BodyData" id="BodyData_di3fi"]
-FilePath = "res://cube1.body"
+FilePath = "res://cube.body"
 
 [node name="PhysicsBody" type="PhysicsBody"]
 BodyData = SubResource("BodyData_di3fi")

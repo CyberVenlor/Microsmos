@@ -100,13 +100,16 @@ void PhysicsObject::solve_force(f32 delta){
 
 void PhysicsObject::solve_point(f32 delta){
     for (auto& point : points){
+        point.velocity += point.force;
+        point.force = Vector2(0,0);
         point.position += point.velocity * delta;
 
-        point.velocity += Vector2(0.001, 0.3);
+        point.velocity += Vector2(0.001, 1);
 
         if (point.position.y > 200){
             point.velocity.y *= -1;
             point.position.y = 200;
+            point.velocity *= 0.2;
         }
     }
 }
@@ -139,19 +142,21 @@ void PhysicsObject::solve_edge(f32 delta){
                     // p0.position += p0.velocity * t;
                     // p1.position += p1.velocity * t;
                     // p.position += p.velocity * t;
-
+                    UtilityFunctions::print("collision");
                     // 计算线段的方向向量和法向量
                     Vector2 line_direction = (p1.position - p0.position).normalized();
                     Vector2 normal = Vector2(-line_direction.y, line_direction.x); // 线段正面的法线
 
+                    UtilityFunctions::print("velocity:",p.velocity);
+                    UtilityFunctions::print("normal:",normal);
                     // 判断法线方向是否正确，基于质点位置相对于线段的位置
                     if ((p.position - p0.position).dot(normal) < 0) {
                         normal = -normal; // 如果质点在线段背面，反转法线方向
-                        
+                        UtilityFunctions::print("inverse");
                     }
-                    normal = -normal;
+                    //normal = -normal;
 
-                    const f32 e = 2;
+                    const f32 e = 0.2;
 
                     float v_n = p.velocity.dot(normal);
                     float v0_n = p0.velocity.dot(normal);
@@ -162,29 +167,46 @@ void PhysicsObject::solve_edge(f32 delta){
                     float m1 = p1.mass;
                     float m_line = m0 + m1;
 
-                    float v_line = (m0 * v0_n + m1 * v1_n) / m_line;
+                    //更新位置
+                    p0.position += p0.velocity * t;
+                    p1.position += p1.velocity * t;
+                    p.position += p.velocity * t;
+
+                    float v_line =v0_n + (p.position.x - p0.position.x)/(p1.position.x - p0.position.x)*(v1_n - v0_n);
+                    // if (v_line > 0) normal = -normal;
 
                     // 计算弹性碰撞后的目标中点速度
-                    float v_line_prime = v_line + e * (v_line - v_n);
+                    float v_line_prime = v_line + (e + 1) * (v_line - v_n);
 
                     // 计算速度变化量
-                    float delta_v_n = m_line * (v_line_prime - v_line) / (p.mass + m_line);
+                    float delta_v_n = m_line * (e + 1) * (v_line - v_n) / (p.mass + m_line);
 
+                    //delta_v_n = MAX(delta_v_n, 1);
+
+                    // UtilityFunctions::print("vline_p:",v_line_prime);
+                    // UtilityFunctions::print("delta:",t);
                     
-
+                    // UtilityFunctions::print("impulse:",delta_v_n * normal);
+                    // UtilityFunctions::print("velocity:", p.velocity);
+                    float delta_v0_n = delta_v_n * (p0.mass * (p.position.x - p0.position.x)) / (m0 * (p.position.x - p0.position.x) + m1 * (p1.position.x - p.position.x));
+                    float delta_v1_n = delta_v_n * (p1.mass * (p1.position.x - p.position.x)) / (m0 * (p.position.x - p0.position.x) + m1 * (p1.position.x - p.position.x));
                     // 更新质点 p 的速度
-                    p.velocity += delta_v_n * normal;
+
+                    p0.position -= p0.velocity * delta;
+                    p1.position -= p1.velocity * delta;
+                    p.position -= p.velocity * delta;
+
+                    p.force += delta_v_n * normal;
 
                     // 更新质点 p0 和 p1 的速度
-                    float delta_v0_n = (p0.mass * delta_v_n) / m_line;
-                    p0.velocity += -delta_v0_n * normal;
+                    
+                    
+                    p0.force += -delta_v1_n * normal;
 
-                    float delta_v1_n = (p1.mass * delta_v_n) / m_line;
-                    p1.velocity += -delta_v1_n * normal;
+                    
+                    p1.force += -delta_v0_n * normal;
 
-                    UtilityFunctions::print(delta_v_n * normal);
-                    UtilityFunctions::print(-delta_v0_n * normal);
-                    UtilityFunctions::print(-delta_v1_n * normal);
+                    // UtilityFunctions::print("velocity", p.velocity);
                 }
             }
         }
@@ -209,8 +231,8 @@ f32 PhysicsObject::continuous_collision_detection(const Point& p, const Point& p
     };
 
     // 判断 A 是否接近 0 (共线或平行)
-    if ( A == 0) {
-        if ( B != 0) {
+    if (abs(A) < 1e-6) {
+        if ( abs(B) > 1e-6) {
             f32 t = -C / B;
             if (t > 0 && t <= delta && is_on_line(p.position.x + p.velocity.x * t, p0.position.x + p0.velocity.x * t, p1.position.x + p1.velocity.x * t)) {
                 return t;
