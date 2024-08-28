@@ -1,7 +1,7 @@
 #ifndef INITIALIZER_H
 #define INITIALIZER_H
 
-#include <godot_cpp/classes/Json.hpp>
+#include <godot_cpp/classes/Resource.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/file_access.hpp>
 #include <stdio.h>

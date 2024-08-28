@@ -63,7 +63,9 @@
         "xtr1common": "cpp",
         "xtree": "cpp",
         "functional": "cpp",
-        "*.cs": "cpp"
+        "*.cs": "cpp",
+        "fstream": "cpp",
+        "sstream": "cpp"
     },
     "cmake.configureOnOpen": true
 }

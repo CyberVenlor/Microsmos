@@ -1,10 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://do2yawbov7puq"]
+[gd_scene load_steps=3 format=3 uid="uid://do2yawbov7puq"]
 
-[sub_resource type="BodyData" id="BodyData_di3fi"]
-FilePath = "res://cube.body"
+[ext_resource type="Script" path="res://Content/Bodies/ExampleBody/Test.gd" id="1_0055u"]
+
+[sub_resource type="BodyData" id="BodyData_5kd51"]
+FilePath = "res://cube1.body"
 
 [node name="PhysicsBody" type="PhysicsBody"]
-BodyData = SubResource("BodyData_di3fi")
+Data = SubResource("BodyData_5kd51")
+script = ExtResource("1_0055u")
 
 [node name="Node2D" type="Node2D" parent="."]
 

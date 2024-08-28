@@ -15,12 +15,12 @@ namespace godot {
     }
 
     void GodotAsseccer::_physics_process(double delta){
-        //PhysicsObject::process((float)delta);
+        //PhysicsObject::process(delta);
         if (Input::get_singleton()->is_action_just_pressed("ui_accept")){
-            PhysicsObject::process((float)delta);
+            PhysicsObject::process(delta);
         }
         if (Input::get_singleton()->is_action_pressed("ui_right")){
-            PhysicsObject::process((float)delta);
+            PhysicsObject::process(delta);
         }
     }
 

@@ -29,7 +29,7 @@ void PhysicsBody::_bind_methods(){
         "PhysicsBody", 
         PropertyInfo(
             Variant::OBJECT,
-            "BodyData",
+            "Data",
             PROPERTY_HINT_RESOURCE_TYPE,
             "BodyData"
         ),
