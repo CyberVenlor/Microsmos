@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Content/Bodies/ExampleBody/Test.gd" id="1_0055u"]
 
 [sub_resource type="BodyData" id="BodyData_5kd51"]
-FilePath = "res://cube1.body"
+FilePath = "res://cube.body"
 
 [node name="PhysicsBody" type="PhysicsBody"]
 Data = SubResource("BodyData_5kd51")

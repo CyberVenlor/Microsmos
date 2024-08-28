@@ -2,6 +2,9 @@
 import os
 import sys
 
+# Encode fix
+os.system('chcp 65001')
+
 # Define the environment for SCons
 env = SConscript("godot-cpp/SConstruct")
 
