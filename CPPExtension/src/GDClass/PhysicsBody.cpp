@@ -1,5 +1,5 @@
-#include "PhysicsBody.h"
-#include "PhysicsObject.h"
+#include "PhysicsBody.hpp"
+#include "PhysicsObject.hpp"
 #include "Pool.hpp"
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/godot.hpp>

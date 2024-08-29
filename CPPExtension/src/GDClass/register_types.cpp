@@ -1,11 +1,11 @@
-#include "register_types.h"
+#include "register_types.hpp"
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/godot.hpp>
 
-#include "GodotAsseccer.h"
-#include "PhysicsBody.h"
+#include "GodotAsseccer.hpp"
+#include "PhysicsBody.hpp"
 #include "BodyData.hpp"
 
 

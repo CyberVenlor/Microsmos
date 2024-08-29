@@ -1,5 +1,5 @@
-#include "GodotAsseccer.h"
-#include "PhysicsObject.h"
+#include "GodotAsseccer.hpp"
+#include "PhysicsObject.hpp"
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/input.hpp>
 

@@ -1,5 +1,5 @@
-#include "PhysicsObject.h"
-#include "GodotAsseccer.h"
+#include "PhysicsObject.hpp"
+#include "GodotAsseccer.hpp"
 #include <thread>
 
 Pool<PhysicsObject> PhysicsObject::physics_objects;
